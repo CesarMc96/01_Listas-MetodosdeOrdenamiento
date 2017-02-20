@@ -1,6 +1,7 @@
 package Principal;
 
 import Excepciones.ElementoNoEncontradoException;
+import Excepciones.ListaVaciaException;
 
 public class Lista {
 
@@ -29,7 +30,7 @@ public class Lista {
         sumarContador();
     }
 
-    private boolean ListaVacia() {
+    public boolean ListaVacia() {
         return inicio == null;
     }
 
@@ -199,5 +200,34 @@ public class Lista {
         if(bandera){
             throw new ElementoNoEncontradoException();
         }
+    }
+    
+    public void agregar(Lista lista) {
+        if(ListaVacia()){
+            inicio = lista.inicio;
+        } else {
+            Nodo aux = inicio;
+            while(aux.getSiguiente() != null){
+                aux = aux.getSiguiente();
+            }
+            aux.setSiguiente(lista.inicio);
+        }
+    }
+    
+    public Integer sacarElemento() throws ListaVaciaException {
+        if(ListaVacia()){
+            throw new ListaVaciaException();
+        } else {
+            Integer resultado = inicio.getElemento();
+            Nodo aux = inicio;
+            inicio = inicio.getSiguiente();
+            aux.setSiguiente(null);
+            return resultado;
+        }
+    }
+    
+    //COMPONER
+    public Integer getMayor(){
+        return null;
     }
 }
