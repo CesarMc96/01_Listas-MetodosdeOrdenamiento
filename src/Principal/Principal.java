@@ -11,8 +11,10 @@ public class Principal {
         l.insertarFinal(8);
         
         l.recorrerLista();
-        System.out.println("Total Elementos: " + l.totalElementos());
-        l.ordenarBurbuja();
-        l.recorrerLista();
+
+        System.out.println("*********************");
+        
+        l.ordenarQuicksort();
+        //l.recorrerLista();
     }
 }
