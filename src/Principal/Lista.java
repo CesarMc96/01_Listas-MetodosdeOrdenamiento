@@ -2,6 +2,7 @@ package Principal;
 
 import Excepciones.ElementoNoEncontradoException;
 import Excepciones.ListaVaciaException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Lista {
@@ -212,7 +213,7 @@ public class Lista {
         int mayor = 0;
         Nodo aux = inicio;
         while (aux != null) {
-            if (aux.getElemento()> mayor) {
+            if (aux.getElemento() > mayor) {
                 mayor = aux.getElemento();
             }
             aux = aux.getSiguiente();
@@ -241,41 +242,67 @@ public class Lista {
     }
 
     public void ordenarQuicksort() {
-        Nodo primero = inicio;
-        Nodo ultimo = inicio;
+        Nodo primero;
+        Nodo ultimo;
+        Nodo aux;
+        ArrayList pivote[] = new ArrayList[2];
 
-        while (ultimo.getSiguiente() != null) {
-            ultimo = ultimo.getSiguiente();
+        Integer[] division = new Integer[totalElementos()];
+
+        for (int i = 0; i < totalElementos(); i++) {
+            division[i] = 0;
         }
 
-        System.out.println("inicio " + primero.getElemento());
-        System.out.println("ultimo " + ultimo.getElemento());
+        pivote[0] = new ArrayList();
+        pivote[1] = new ArrayList();
 
+        if (totalElementos() > 0) {
+            division[0] = 1;
+            division[totalElementos() - 1] = 1;
+            pivote[0].remove(0);
+            pivote[1].remove(0);
+        }
+
+        while (!pivote[0].isEmpty()) {
+            primero = (Nodo) pivote[0].get(0);
+            ultimo = (Nodo) pivote[1].get(0);
+            pivote[0].remove(0);
+            pivote[1].remove(0);
+        }
     }
-//    public void ordenarQuicksort(int[] vector, int primero, int ultimo) {
-//        int i = primero, j = ultimo;
-//        int pivote = vector[(primero + ultimo) / 2];
-//        int auxiliar;
-//        do {
-//            while (vector[i] < pivote) {
-//                i++;
-//            }
-//            while (vector[j] > pivote) {
-//                j--;
-//            }
-//            if (i <= j) {
-//                auxiliar = vector[j];
-//                vector[j] = vector[i];
-//                vector[i] = auxiliar;
-//                i++;
-//                j--;
-//            }
-//        } while (i <= j);
-//        if (primero < j) {
-//            ordenarQuicksort(vector, primero, j);
-//        }
-//        if (ultimo > i) {
-//            ordenarQuicksort(vector, i, ultimo);
-//        }
-//    }
+
+    public void ordenarShell() {
+        Integer pivote = totalElementos() / 2;
+        Nodo aux = inicio; 
+        Nodo aux1 = inicio; 
+
+        for (int i = 0; aux != null && i < pivote; i++) {
+            aux1 = aux1.getSiguiente();
+        }
+        while (pivote >= 1) {
+            while (aux1 != null) {
+
+                while (aux != null && aux.getElemento() > aux1.getElemento()) {
+                    Integer k = aux.getElemento();
+                    aux.setElemento(aux1.getElemento());
+                    aux1.setElemento(k);
+                    k = 0;
+                    aux1 = aux;
+                    while (aux != null && k < pivote) {
+                        //aux = aux.
+                        k++;
+                    }
+                }
+                aux = aux.getSiguiente();
+                aux1 = aux1.getSiguiente();
+            }
+            pivote /= 2;
+            aux = inicio;
+            aux1 = inicio;
+            
+            for (int k = 0; aux1 != null && k < pivote; k++) {
+                aux1 = aux1.getSiguiente();
+            }
+        }
+    }
 }
